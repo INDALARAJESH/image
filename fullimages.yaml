@@ -1,0 +1,1619 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: auditlog
+  name: auditlog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: auditlog
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.27.0 (b0ed6a2c9)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: auditlog
+    spec:
+      containers:
+        - image: dronahq/dronahq-self-hosted-auditlog
+          name: dronahq-self-hosted-auditlog
+          ports:
+            - containerPort: 9591
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/.env
+              name: auditlog-claim0
+              readOnly: true
+            - mountPath: /app/files
+              name: auditlog-claim1
+            - mountPath: /app/private
+              name: auditlog-claim2
+      restartPolicy: Always
+      volumes:
+        - name: auditlog-claim0
+          persistentVolumeClaim:
+            claimName: auditlog-claim0
+            readOnly: true
+        - name: auditlog-claim1
+          persistentVolumeClaim:
+            claimName: auditlog-claim1
+        - name: auditlog-claim2
+          persistentVolumeClaim:
+            claimName: auditlog-claim2
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: auditlog
+  name: auditlog
+spec:
+  ports:
+    - name: "9591"
+      port: 9591
+      targetPort: 9591
+  selector:
+    io.kompose.service: auditlog
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: auditlog
+  name: auditlog
+spec:
+  ports:
+    - name: "9591"
+      port: 9591
+      targetPort: 9591
+  selector:
+    io.kompose.service: auditlog
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: auditlog-claim2
+  name: auditlog-claim2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: auditlog-claim1
+  name: auditlog-claim1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: auditlog-claim0
+  name: auditlog-claim0
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: builder
+  name: builder
+spec:
+  ports:
+    - name: "9592"
+      port: 9592
+      targetPort: 9592
+  selector:
+    io.kompose.service: builder
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: builder
+  name: builder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: builder
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.27.0 (b0ed6a2c9)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: builder
+    spec:
+      containers:
+        - image: dronahq/dronahq-self-hosted-builder
+          name: dronahq-self-hosted-builder
+          ports:
+            - containerPort: 9592
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/.env
+              name: builder-claim0
+              readOnly: true
+            - mountPath: /app/files
+              name: builder-claim1
+            - mountPath: /app/private
+              name: builder-claim2
+      restartPolicy: Always
+      volumes:
+        - name: builder-claim0
+          persistentVolumeClaim:
+            claimName: builder-claim0
+            readOnly: true
+        - name: builder-claim1
+          persistentVolumeClaim:
+            claimName: builder-claim1
+        - name: builder-claim2
+          persistentVolumeClaim:
+            claimName: builder-claim2
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: builder-claim2
+  name: builder-claim2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: builder-claim1
+  name: builder-claim1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: builder-claim0
+  name: builder-claim0
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: device-api
+  name: device-api
+spec:
+  ports:
+    - name: "9593"
+      port: 9593
+      targetPort: 9593
+  selector:
+    io.kompose.service: device-api
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: device-api
+  name: device-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: device-api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.27.0 (b0ed6a2c9)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: device-api
+    spec:
+      containers:
+        - image: dronahq/dronahq-self-hosted-device-api
+          name: dronahq-self-hosted-device-api
+          ports:
+            - containerPort: 9593
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/.env
+              name: device-api-claim0
+              readOnly: true
+            - mountPath: /app/files
+              name: device-api-claim1
+            - mountPath: /app/private
+              name: device-api-claim2
+      restartPolicy: Always
+      volumes:
+        - name: device-api-claim0
+          persistentVolumeClaim:
+            claimName: device-api-claim0
+            readOnly: true
+        - name: device-api-claim1
+          persistentVolumeClaim:
+            claimName: device-api-claim1
+        - name: device-api-claim2
+          persistentVolumeClaim:
+            claimName: device-api-claim2
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: device-api-claim2
+  name: device-api-claim2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: device-api-claim1
+  name: device-api-claim1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: device-api-claim0
+  name: device-api-claim0
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: file-repository
+  name: file-repository
+spec:
+  ports:
+    - name: "9594"
+      port: 9594
+      targetPort: 9594
+  selector:
+    io.kompose.service: file-repository
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: file-repository
+  name: file-repository
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: file-repository
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.27.0 (b0ed6a2c9)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: file-repository
+    spec:
+      containers:
+        - image: dronahq/dronahq-self-hosted-file-repository
+          name: dronahq-self-hosted-file-repository
+          ports:
+            - containerPort: 9594
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/.env
+              name: file-repository-claim0
+              readOnly: true
+            - mountPath: /app/files
+              name: file-repository-claim1
+            - mountPath: /app/private
+              name: file-repository-claim2
+      restartPolicy: Always
+      volumes:
+        - name: file-repository-claim0
+          persistentVolumeClaim:
+            claimName: file-repository-claim0
+            readOnly: true
+        - name: file-repository-claim1
+          persistentVolumeClaim:
+            claimName: file-repository-claim1
+        - name: file-repository-claim2
+          persistentVolumeClaim:
+            claimName: file-repository-claim2
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: file-repository-claim2
+  name: file-repository-claim2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: file-repository-claim1
+  name: file-repository-claim1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: file-repository-claim0
+  name: file-repository-claim0
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mongodb
+  name: mongodb
+spec:
+  ports:
+    - name: "27017"
+      port: 27017
+      targetPort: 27017
+  selector:
+    io.kompose.service: mongodb
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mongodb
+  name: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mongodb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.27.0 (b0ed6a2c9)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mongodb
+    spec:
+      containers:
+        - env:
+            - name: AUDITLOG_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: AUDITLOG_URL
+                  name: dronahq-env
+            - name: BUILDER_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: BUILDER_URL
+                  name: dronahq-env
+            - name: DEVICEAPI_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: DEVICEAPI_URL
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_DATABASE
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_HOST
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_PASSWORD
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_PORT
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_USER
+                  name: dronahq-env
+            - name: DHQ_MONGODB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_DATABASE
+                  name: dronahq-env
+            - name: DHQ_MONGODB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_HOST
+                  name: dronahq-env
+            - name: DHQ_MONGODB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_PASSWORD
+                  name: dronahq-env
+            - name: DHQ_MONGODB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_PORT
+                  name: dronahq-env
+            - name: DHQ_MONGODB_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_USER
+                  name: dronahq-env
+            - name: DHQ_MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_DATABASE
+                  name: dronahq-env
+            - name: DHQ_MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_HOST
+                  name: dronahq-env
+            - name: DHQ_MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_PASSWORD
+                  name: dronahq-env
+            - name: DHQ_MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_PORT
+                  name: dronahq-env
+            - name: DHQ_MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_USER
+                  name: dronahq-env
+            - name: FILEREPOSITORY_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: FILEREPOSITORY_URL
+                  name: dronahq-env
+            - name: LICENSE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: LICENSE_KEY
+                  name: dronahq-env
+            - name: MONGO_INITDB_PWD
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_PWD
+                  name: dronahq-env
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_ROOT_PASSWORD
+                  name: dronahq-env
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_ROOT_USERNAME
+                  name: dronahq-env
+            - name: MONGO_INITDB_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_USER
+                  name: dronahq-env
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_DATABASE
+                  name: dronahq-env
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_PASSWORD
+                  name: dronahq-env
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_ROOT_PASSWORD
+                  name: dronahq-env
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_USER
+                  name: dronahq-env
+            - name: RUNAPI_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: RUNAPI_URL
+                  name: dronahq-env
+            - name: SSL_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  key: SSL_DOMAIN
+                  name: dronahq-env
+            - name: WEBAPP_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: WEBAPP_URL
+                  name: dronahq-env
+          image: mongo:5.0.11
+          name: dronahq-self-hosted-mongodb
+          ports:
+            - containerPort: 27017
+          resources: {}
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d/mongo-init.sh
+              name: mongodb-claim0
+              readOnly: true
+            - mountPath: /mongodump
+              name: mongodb-claim1
+            - mountPath: /data/db
+              name: mongodb-claim2
+      restartPolicy: Always
+      volumes:
+        - name: mongodb-claim0
+          persistentVolumeClaim:
+            claimName: mongodb-claim0
+            readOnly: true
+        - name: mongodb-claim1
+          persistentVolumeClaim:
+            claimName: mongodb-claim1
+        - name: mongodb-claim2
+          persistentVolumeClaim:
+            claimName: mongodb-claim2
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mongodb-claim2
+  name: mongodb-claim2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mongodb-claim1
+  name: mongodb-claim1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mongodb-claim0
+  name: mongodb-claim0
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysqldb
+  name: mysqldb
+spec:
+  ports:
+    - name: "3306"
+      port: 3306
+      targetPort: 3306
+  selector:
+    io.kompose.service: mysqldb
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysqldb
+  name: mysqldb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mysqldb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.27.0 (b0ed6a2c9)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mysqldb
+    spec:
+      containers:
+        - args:
+            - --default-authentication-plugin=mysql_native_password
+          env:
+            - name: AUDITLOG_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: AUDITLOG_URL
+                  name: dronahq-env
+            - name: BUILDER_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: BUILDER_URL
+                  name: dronahq-env
+            - name: DEVICEAPI_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: DEVICEAPI_URL
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_DATABASE
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_HOST
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_PASSWORD
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_PORT
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_USER
+                  name: dronahq-env
+            - name: DHQ_MONGODB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_DATABASE
+                  name: dronahq-env
+            - name: DHQ_MONGODB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_HOST
+                  name: dronahq-env
+            - name: DHQ_MONGODB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_PASSWORD
+                  name: dronahq-env
+            - name: DHQ_MONGODB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_PORT
+                  name: dronahq-env
+            - name: DHQ_MONGODB_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_USER
+                  name: dronahq-env
+            - name: DHQ_MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_DATABASE
+                  name: dronahq-env
+            - name: DHQ_MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_HOST
+                  name: dronahq-env
+            - name: DHQ_MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_PASSWORD
+                  name: dronahq-env
+            - name: DHQ_MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_PORT
+                  name: dronahq-env
+            - name: DHQ_MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_USER
+                  name: dronahq-env
+            - name: FILEREPOSITORY_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: FILEREPOSITORY_URL
+                  name: dronahq-env
+            - name: LICENSE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: LICENSE_KEY
+                  name: dronahq-env
+            - name: MONGO_INITDB_PWD
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_PWD
+                  name: dronahq-env
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_ROOT_PASSWORD
+                  name: dronahq-env
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_ROOT_USERNAME
+                  name: dronahq-env
+            - name: MONGO_INITDB_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_USER
+                  name: dronahq-env
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_DATABASE
+                  name: dronahq-env
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_PASSWORD
+                  name: dronahq-env
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_ROOT_PASSWORD
+                  name: dronahq-env
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_USER
+                  name: dronahq-env
+            - name: RUNAPI_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: RUNAPI_URL
+                  name: dronahq-env
+            - name: SSL_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  key: SSL_DOMAIN
+                  name: dronahq-env
+            - name: WEBAPP_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: WEBAPP_URL
+                  name: dronahq-env
+          image: mysql:oracle
+          name: dronahq-self-hosted-mysqldb
+          ports:
+            - containerPort: 3306
+          resources: {}
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d/schema.sql
+              name: mysqldb-claim0
+              readOnly: true
+            - mountPath: /var/lib/mysql
+              name: mysqldb-claim1
+            - mountPath: /etc/mysql/conf.d/my.cnf
+              name: mysqldb-claim2
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: mysqldb-claim0
+          persistentVolumeClaim:
+            claimName: mysqldb-claim0
+            readOnly: true
+        - name: mysqldb-claim1
+          persistentVolumeClaim:
+            claimName: mysqldb-claim1
+        - name: mysqldb-claim2
+          persistentVolumeClaim:
+            claimName: mysqldb-claim2
+            readOnly: true
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysqldb-claim2
+  name: mysqldb-claim2
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysqldb-claim1
+  name: mysqldb-claim1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysqldb-claim0
+  name: mysqldb-claim0
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: runapi
+  name: runapi
+spec:
+  ports:
+    - name: "9595"
+      port: 9595
+      targetPort: 9595
+  selector:
+    io.kompose.service: runapi
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: runapi
+  name: runapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: runapi
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.27.0 (b0ed6a2c9)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: runapi
+    spec:
+      containers:
+        - image: dronahq/dronahq-self-hosted-runapi
+          name: dronahq-self-hosted-runapi
+          ports:
+            - containerPort: 9595
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/.env
+              name: runapi-claim0
+              readOnly: true
+            - mountPath: /app/files
+              name: runapi-claim1
+            - mountPath: /app/private
+              name: runapi-claim2
+      restartPolicy: Always
+      volumes:
+        - name: runapi-claim0
+          persistentVolumeClaim:
+            claimName: runapi-claim0
+            readOnly: true
+        - name: runapi-claim1
+          persistentVolumeClaim:
+            claimName: runapi-claim1
+        - name: runapi-claim2
+          persistentVolumeClaim:
+            claimName: runapi-claim2
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: runapi-claim2
+  name: runapi-claim2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: runapi-claim1
+  name: runapi-claim1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: runapi-claim0
+  name: runapi-claim0
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webapp
+  name: webapp
+spec:
+  ports:
+    - name: "9596"
+      port: 9596
+      targetPort: 9596
+  selector:
+    io.kompose.service: webapp
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webapp
+  name: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: webapp
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.27.0 (b0ed6a2c9)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: webapp
+    spec:
+      containers:
+        - image: dronahq/dronahq-self-hosted-webapp
+          name: dronahq-self-hosted-webapp
+          ports:
+            - containerPort: 9596
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/.env
+              name: webapp-claim0
+              readOnly: true
+            - mountPath: /app/files
+              name: webapp-claim1
+            - mountPath: /app/private
+              name: webapp-claim2
+      restartPolicy: Always
+      volumes:
+        - name: webapp-claim0
+          persistentVolumeClaim:
+            claimName: webapp-claim0
+            readOnly: true
+        - name: webapp-claim1
+          persistentVolumeClaim:
+            claimName: webapp-claim1
+        - name: webapp-claim2
+          persistentVolumeClaim:
+            claimName: webapp-claim2
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webapp-claim2
+  name: webapp-claim2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webapp-claim1
+  name: webapp-claim1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webapp-claim0
+  name: webapp-claim0
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webserver
+  name: webserver
+spec:
+  ports:
+    - name: "80"
+      port: 80
+      targetPort: 80
+    - name: "443"
+      port: 443
+      targetPort: 443
+    - name: "8080"
+      port: 8080
+      targetPort: 80
+  selector:
+    io.kompose.service: webserver
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webserver
+  name: webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: webserver
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.27.0 (b0ed6a2c9)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: webserver
+    spec:
+      containers:
+        - env:
+            - name: AUDITLOG_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: AUDITLOG_URL
+                  name: dronahq-env
+            - name: BUILDER_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: BUILDER_URL
+                  name: dronahq-env
+            - name: DEVICEAPI_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: DEVICEAPI_URL
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_DATABASE
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_HOST
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_PASSWORD
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_PORT
+                  name: dronahq-env
+            - name: DHQ_AUDIT_LOG_MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_AUDIT_LOG_MYSQL_USER
+                  name: dronahq-env
+            - name: DHQ_MONGODB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_DATABASE
+                  name: dronahq-env
+            - name: DHQ_MONGODB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_HOST
+                  name: dronahq-env
+            - name: DHQ_MONGODB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_PASSWORD
+                  name: dronahq-env
+            - name: DHQ_MONGODB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_PORT
+                  name: dronahq-env
+            - name: DHQ_MONGODB_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MONGODB_USER
+                  name: dronahq-env
+            - name: DHQ_MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_DATABASE
+                  name: dronahq-env
+            - name: DHQ_MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_HOST
+                  name: dronahq-env
+            - name: DHQ_MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_PASSWORD
+                  name: dronahq-env
+            - name: DHQ_MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_PORT
+                  name: dronahq-env
+            - name: DHQ_MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: DHQ_MYSQL_USER
+                  name: dronahq-env
+            - name: FILEREPOSITORY_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: FILEREPOSITORY_URL
+                  name: dronahq-env
+            - name: LICENSE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: LICENSE_KEY
+                  name: dronahq-env
+            - name: MONGO_INITDB_PWD
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_PWD
+                  name: dronahq-env
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_ROOT_PASSWORD
+                  name: dronahq-env
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_ROOT_USERNAME
+                  name: dronahq-env
+            - name: MONGO_INITDB_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_INITDB_USER
+                  name: dronahq-env
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_DATABASE
+                  name: dronahq-env
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_PASSWORD
+                  name: dronahq-env
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_ROOT_PASSWORD
+                  name: dronahq-env
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: MYSQL_USER
+                  name: dronahq-env
+            - name: RUNAPI_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: RUNAPI_URL
+                  name: dronahq-env
+            - name: SSL_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  key: SSL_DOMAIN
+                  name: dronahq-env
+            - name: WEBAPP_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: WEBAPP_URL
+                  name: dronahq-env
+          image: nginx
+          name: dronahq-self-hosted-webserver
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/nginx/templates/default.conf.template
+              name: webserver-claim0
+              readOnly: true
+            - mountPath: /var/www/certbot/
+              name: webserver-claim1
+              readOnly: true
+            - mountPath: /etc/nginx/ssl/
+              name: webserver-claim2
+              readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: webserver-claim0
+          persistentVolumeClaim:
+            claimName: webserver-claim0
+            readOnly: true
+        - name: webserver-claim1
+          persistentVolumeClaim:
+            claimName: webserver-claim1
+            readOnly: true
+        - name: webserver-claim2
+          persistentVolumeClaim:
+            claimName: webserver-claim2
+            readOnly: true
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webserver-claim2
+  name: webserver-claim2
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webserver-claim1
+  name: webserver-claim1
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webserver-claim0
+  name: webserver-claim0
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Mi
+status: {}
